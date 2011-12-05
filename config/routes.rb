@@ -6,6 +6,7 @@ TurkeeIterator::Application.routes.draw do
   end
   resources :iteration_votes
 
+  resources :turkee_tasks
   namespace :turkee  do
     resources :turkee_tasks
   end
