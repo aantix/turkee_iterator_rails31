@@ -1,0 +1,40 @@
+<h3>Submissions from other users.</h3>
+
+<table>
+  <tr>
+    <th>Submission</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th><%= @turkee_task.allow_voting? ?  "Votes" : "" %></th>
+  </tr>
+
+  <% @iterations.each do |iteration| %>
+      <tr>
+
+        <td>
+        <span class="alt">
+          <%= h iteration.value %>
+        </span>
+        </td>
+
+        <td>
+          <% if @turkee_task.allow_voting? %>
+              <% turkee_form_for(IterationVote.new, @assignment_id) do |f| %>
+                  <%= f.hidden_field :iteration_id, :value => iteration.id %>
+                  <%= f.submit 'Vote!', :disabled => @disabled %>
+              <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+
+        <td>
+          <%= link_to_function('Copy', "set_text('iteration_value','#{CGI.escapeHTML(iteration.value)}')") if @turkee_task.allow_voting? %>
+        </td>
+
+        <td>
+          <%= h iteration.iteration_votes.count if @turkee_task.allow_voting?%>
+        </td>
+      </tr>
+  <% end %>
+</table>

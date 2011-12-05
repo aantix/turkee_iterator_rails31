@@ -1,0 +1,22 @@
+<div class="span-24 success">
+
+    <h2>Directions:</h2>
+
+    <%= simple_format(@turkee_task.form_body, :class => 'large') %>
+
+    <hr class="space">
+
+    Link: <%= link_to(truncate(@turkee_task.hit_url,:length => 60, :omission => '...'), @turkee_task.hit_url) %>
+
+</div>
+
+<div class="span-24">
+
+  <%= render :partial => 'spinner' %>
+
+  <div id="results" class="span-11" data-id="<%=  @turkee_task.id %>">
+    <%# render :partial => 'results' %>
+  </div>
+
+</div>
+
