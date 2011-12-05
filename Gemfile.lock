@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/aantix/turkee.git
+  revision: ecb20b3975b14903046dea24f6dac37941daa56b
+  branch: turkee_rails31
+  specs:
+    turkee (1.1.1)
+      lockfile (>= 1.4.3)
+      rails (>= 3.0.7)
+      rturk (>= 2.3.0)
+      turkee
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -118,11 +129,6 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    turkee (1.1.1)
-      lockfile (>= 1.4.3)
-      rails (>= 3.0.7)
-      rturk (>= 2.3.0)
-      turkee
     turn (0.8.3)
       ansi
     tzinfo (0.3.31)
@@ -143,6 +149,6 @@ DEPENDENCIES
   rails (= 3.1.1)
   sass-rails (~> 3.1.4)
   sqlite3
-  turkee
+  turkee!
   turn
   uglifier (>= 1.0.3)
