@@ -1,4 +1,5 @@
 class Turkee::TurkeeTasksController < ApplicationController
+  before_filter :require_logged_in
   # Creates a new TurkeeTask and posts the request to the mechanical turk server.
   def new
     @turkee_task = Turkee::TurkeeTask.new

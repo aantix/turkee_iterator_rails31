@@ -10,6 +10,9 @@ TurkeeIterator::Application.routes.draw do
     resources :turkee_tasks
   end
 
+  match '/auth/github/callback', :to => "application#github_callback"
+  match '/auth/github', :as => :github_login
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

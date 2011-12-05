@@ -4,6 +4,8 @@ gem 'rails', '3.1.1'
 gem 'mysql2'
 gem 'turkee', :git => 'https://github.com/aantix/turkee.git', :branch => 'turkee_rails31'
 gem 'acts_as_tree'
+gem 'omniauth'
+gem 'omniauth-github'
 
 
 # Bundle edge Rails instead:
