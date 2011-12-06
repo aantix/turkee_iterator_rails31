@@ -18,14 +18,7 @@ class IterationsController < ApplicationController
   #  to be listed on the index page.
   def results
     get_results(true)
-
     render :partial => (params[:result_partial] || 'results')
-
-    #render :update do |page|
-    #  page.show('spinner')
-    #  page.replace_html 'results', :partial => (params[:result_partial] || 'results')
-    #  page.hide('spinner')
-    #end
   end
 
   private
