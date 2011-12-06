@@ -4,4 +4,4 @@ AWSACCESSKEYID      = ENV['AWS_KEY']
 AWSSECRETACCESSKEY  = ENV['AWS_SECRET']
 
 RTurk::logger.level = Logger::DEBUG
-RTurk.setup(AWSACCESSKEYID, AWSSECRETACCESSKEY, :sandbox => true)
+RTurk.setup(AWSACCESSKEYID, AWSSECRETACCESSKEY, :sandbox => false)
