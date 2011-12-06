@@ -1,4 +1,8 @@
-<h3>Submissions from other users.</h3>
+<% if @turkee_task.allow_voting? %>
+  <h3>VOTE for your favorite submission.</h3>
+<% else %>
+  <h3>Submissions from other users.</h3>
+<% end %>
 
 <table>
   <tr>
@@ -19,7 +23,7 @@
 
         <td>
           <% if @turkee_task.allow_voting? %>
-              <% turkee_form_for(IterationVote.new, @assignment_id) do |f| %>
+              <%= turkee_form_for(IterationVote.new, params) do |f| %>
                   <%= f.hidden_field :iteration_id, :value => iteration.id %>
                   <%= f.submit 'Vote!', :disabled => @disabled %>
               <% end %>
