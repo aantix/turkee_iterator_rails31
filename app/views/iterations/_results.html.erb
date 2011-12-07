@@ -8,7 +8,11 @@
 
   <% @iterations.each do |iteration| %>
       <tr>
-        <td><%= simple_format iteration.value %></td>
+        <td><%=
+            auto_link(iteration.value, :html => { :target => '_blank' }) do |text|
+                simple_format text
+            end
+            %></td>
         <td><%= iteration.iteration_votes.count if @turkee_task.allow_voting? %></td>
       </tr>
   <% end %>
