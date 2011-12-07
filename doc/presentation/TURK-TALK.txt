@@ -1,0 +1,148 @@
+https://detective.textmatch.me/      #
+######################################
+
+# setup git repository
+#http://thelucid.com/2008/12/02/git-setting-up-a-remote-repository-and-doing-an-initial-push/
+
+# capify it
+capify .
+cp ~/Projects/detective/config/deploy.rb config/
+# change deploy.rb
+cap deploy:cold
+
+CREATE USER 'turk'@'%' IDENTIFIED BY 'turk10';
+UPDATE mysql.user SET max_questions=0,max_updates=0,max_connections=0 WHERE User='turk' AND Host='%';
+GRANT CREATE ROUTINE, CREATE VIEW, CREATE USER, ALTER, SHOW VIEW, CREATE, ALTER ROUTINE, EVENT, SUPER, INSERT, RELOAD, SELECT, DELETE, FILE, SHOW DATABASES, TRIGGER, SHUTDOWN, REPLICATION CLIENT, GRANT OPTION, PROCESS, REFERENCES, UPDATE, DROP, REPLICATION SLAVE, EXECUTE, LOCK TABLES, CREATE TEMPORARY TABLES, INDEX ON *.* TO 'turk'@'localhost';
+FLUSH PRIVILEGES;
+
+Setup virtual host for Apache (point at public dir):
+https://74.50.50.37:10000/
+
+Setup dns for subdomain:
+https://rimuhosting.com/dns/zone.jsp?zone=textmatch.me
+
+# restart server
+/etc/init.d/httpd restart
+==========================
+http://turkee.textmatch.me/iterations/
+==========================
+
+https://requester.mturk.com/mturk/help?helpPage=policies#restrictions_use_mturk
+
+
+Relevant articles :
+http://www.readwriteweb.com/enterprise/2010/03/crowdsourcing-in-the-enterpris.php
+http://www.crowdcast.com/
+http://waxy.org/2008/11/the_faces_of_mechanical_turk/
+
+
+TurKit: Tools for Iterative Tasks on Mechanical Turk
+
+
+1) Describe Turk
+2) Show interface for looking at HITs
+3) Describe the different types of HITs and how to post (external forms vs internal)
+
+
+**) Show off the 10,000 sheep demo.
+http://www.thesheepmarket.com/
+
+**) Show off the faces of mechanical turk.
+http://waxy.org/2008/11/the_faces_of_mechanical_turk/
+
+4) Describe work with Detective
+
+5) Describe Turkee gem
+
+6) Describe the MIT paper
+6) Create simple app that show asks the Turk to say "hello" to the people watching the demo
+  6a) Show off the Turkee capabilities of creating the form, posting HITs, and retrieving HIT values
+  6b) Show off "JokeGenerator" where the user completes the analogy (do a trial run to see if the user gets it)
+     "Like a midget in a urinal I _______________________ "
+     "Like a blind man in an orgy I ______________________"
+
+
+  6c)  Take a more iterative approach to the "Joke Machine".  Provide the seed joke, "Like a midget in a urinal, I was going to have to stand on my toes."
+     If the user thinks this is funny, they can mark funny and get five cents.  If they think they can come up with something better, they can submit
+     their own completion of the analogy, and get 25 cents (make it significantly higher than the original payout).
+
+7) Show a more advanced application using a finite state machine where the results of one HIT
+  are then used to propogate the creation of subsequent data
+  7a)  Start a story and ask the user to add to it.  "There once was a man from <city> who liked to <verb> and <verb>.  He owned <noun> and a <noun>.  He was <adjetive>."
+  7b) Askk 100 users to add to the story.
+  7c) Once the "add to story" HIT is complete, submit another HIT to have turk users vote for best story.
+  7d) Use best story, and submit another HIT asking another group of Turkers to complete the next chapter.
+  
+
+  ** There needs to be a general interface to enter a HIT title, HIT desc, and HIT body.
+
+     More abstract, write an "iteration" application that allows the user to specify the HIT title, description, and the HIT body.
+     The general interface shows the last 10 form submissions, has a "Vote" button next to each one, a copy button (to reuse someone else's submission)
+     and then an area at the bottom that allows the user to enter a new submission (or a modification of an existing one) if they like. 
+
+
+     Then write up examples showing 1) An iterative story system where the initial story seed is written, and the user provides the next four to five sentences in the story.
+     2) An iterative system that takes one of our partner's advertisements and allows the end user to make modifications to make it sound "clearer".
+
+     
+
+
+8) Show off micro bonuses, the concept where the user is awarded a varying amount depending upon how much time they take to answer a question
+  or how accurate it (relative to the other user answers)
+
+  Maybe there's a trivia game where you record how long it takes each user to answer a question
+  and the fastest response for the day gets 10 cents instead of 5.
+
+8) Discuss how turk could be applied to the content team and removal of duplicates.
+  E.g. Venue is missing the address field, so the system is unsure of whether the name of the 
+  is the same as the one already in system.
+
+  Show the user the original record and show them the incomplete record and tell them to complete the data.
+  If enough people enter the same data and it matches the current venue record, then we can point the queued venue 
+  at the master record.  Otherwise, the venue stays in the queue to be resolved by our editors.
+
+  For this, show off the "ESP" game (the Google presentation).  If you can make the turk entertaining, or a game, people are more apt to stick around and complete a task for a nickel or whatever.
+
+  So, we record how long it takes someone to fill out an unknown location.  Time the name, address, phone, zip code.
+  And then soneoneb else is asked to fill out the same info (to validate the first user's input), you can make a game in the form of the ESP game.
+
+  "You are now matched against Tom Silver of the United Kingdom.  See who can complete the data the fastest in five, four, three, two one."
+  The second user is essentially replayed the input recorded from the first user, but it feels like they are playing against the user.
+
+  As an incentive, if the user beats the first users time, they are awarded a bonus?.
+
+9) What about an app that allows users to gamble with their possible payout?  You show the user all of the recent headlines for a given stock.
+You state that they can either take their payout now, OR, if they think that the stock will close out higher than it is now at the end of the day,
+they can "gamble", and will be awareded the fee PLUS a bonus at the end of the day.  If it closes down from the point at where it is, they receive nothing.
+
+
+10)  One side note about hosting external forms for MT, the site automatically redirects to https and so if your forms run under http, 
+you'll get an ugly security warning dialog in IE 7/8.  Best to purchase a cheap SSL certificate and run the forms under https to prevent the annoying/confusing
+IE popups.
+
+=======================
+
+
+Example 1:  Jokes
+
+
+1) Is this line funny?
+
+2) I love jokes and I especially love "one liners" that you often hear in movies such as _Airplane!_ or _The Naked Gun_.  Here's a favorite of mine :
+
+"Like a blind man in an orgy, I was going to have to feel my way around."
+
+Read the one-liner(s) below, and if you think it is funny, click the "vote" button.  If you do not think it is funny, submit your own one-liner for a chance to win $1.00 bonus if your one liner is selected.
+
+3) Either click "vote" next to the line that you think is funniest, or submit your own to win a $1.00 bonus. You can use other people's jokes, change them slightly, and create new one liner (just click the "copy" link).
+
+4) 0.05
+
+5) 100
+
+6) 5
+
+7) Like a midget at a urinal, I was going to have to stay on my toes.
+
+
+

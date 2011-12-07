@@ -1,0 +1,24 @@
+global_search_filters[:categories] = display_category.categories.map(&:id) if display_category.categories.length > 0
+
+
+search = Event.search.trim(true).rows(0).include_sponsored(:start => 3, :rows => 9).start_date(Date.today) \
+  .location(user_location).sort_by_relevance.add(global_search_filters)
+
+
+
+
+ZvSearch.new.search.shards('movie','restaurant','event')
+
+
+
+
+def encode_filter(filter)
+  (filter[:panel]+"-"+filter[:value]+"-"+filter[:name]+"-"+filter[:checked]).gsub(/[#;&,.+*~':"!^$\[\]\(\)=>\|\/@ ]/){|match| '\\\\'+match}
+end
+
+
+
+Moving Staffers
+888-409-6617
+
+

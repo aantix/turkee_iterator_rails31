@@ -1,0 +1,253 @@
+h1. What is Mechanical Turk
+
+The Amazon Mechanical Turk (MTurk) is one of the suites of Amazon Web Services, a crowd-sourcing Internet marketplace that enables computer programmers (known as Requesters) who are located in the United States to co-ordinate the use of human intelligence to perform tasks which computers are unable to do.  The people that perform these tasks are informally referred to as "Turkers".
+
+h1. Mechanical Turk Demographics
+*[http://waxy.org/2008/11/the_faces_of_mechanical_turk/]http://waxy.org/2008/11/the_faces_of_mechanical_turk/
+
+!http://waxy.org/random/images/faces_of_mechanical_turk.jpg!
+
+h1. More Demographics
+
+*[http://behind-the-enemy-lines.blogspot.com/2010/03/new-demographics-of-mechanical-turk.html]http://behind-the-enemy-lines.blogspot.com/2010/03/new-demographics-of-mechanical-turk.html
+
+
+* United States: 46.80%
+* India: 34.00%
+* Miscellaneous: 19.20%
+
+!http://4.bp.blogspot.com/_skxW9kDLt_c/S5bhZ-i8EBI/AAAAAAAAEb0/RzSvlYP5KYY/s1600-h/gender.PNG!
+
+!http://4.bp.blogspot.com/_skxW9kDLt_c/S5bhzBTD34I/AAAAAAAAEb8/UdDG6wxOqx0/s400/yob-us.PNG!
+
+!http://2.bp.blogspot.com/_skxW9kDLt_c/S5bh4JNpcII/AAAAAAAAEcE/MhjDR45co_s/s400/yob-india.PNG!
+
+!http://1.bp.blogspot.com/_skxW9kDLt_c/S5biMTGXPhI/AAAAAAAAEcM/x0KnVb1bBTU/s400/education.PNG!
+
+!http://4.bp.blogspot.com/_skxW9kDLt_c/S5bi19YAcvI/AAAAAAAAEcU/ZH6t2wE5D60/s400/income-us.PNG!
+
+!http://1.bp.blogspot.com/_skxW9kDLt_c/S5bi5ju2i9I/AAAAAAAAEcc/wcQbwMJWbQk/s400/income-india.PNG!
+
+h1. The Mechanical Turk Interface
+
+* Worker Interface
+[https://www.mturk.com/mturk/findhits?match=false]https://www.mturk.com/mturk/findhits?match=false
+
+* Requester Interface
+[https://requester.mturk.com/bulk/batches]https://requester.mturk.com/bulk/batches
+
+h1. Common Uses
+
+* Tagging of images
+* Collection of survey data
+* Sentiment analysis
+
+h1. Ruby Libraries
+
+* RTurk gem
+[http://github.com/mdp/rturk]http://github.com/mdp/rturk
+
+* Creating HITs
+bc..h = RTurk::Hit.create(:title => hit_title) do |hit|
+  hit.assignments = num_assignments
+  hit.description = hit_description
+  hit.reward      = reward
+  hit.lifetime    = duration.days.seconds.to_i
+  hit.question(f_url, :frame_height => HIT_FRAMEHEIGHT)
+  # hit.qualifications.add :approval_rate, { :gt => 80 }
+end
+
+* Reviewing HITs
+bc..hits = RTurk::Hit.all_reviewable
+
+puts "#{hits.size} reviewable hits. \n"
+
+unless hits.empty?
+  puts "Reviewing all assignments"
+
+  hits.each do |hit|
+    hit.assignments.each do |assignment|
+      puts assignment.answers['tags']
+      assignment.approve! if assignment.status == 'Submitted'
+    end
+  end
+end
+
+h1. Creative Uses of Mechanical Turk
+
+* 10,000 Sheep
+[http://www.thesheepmarket.com/]:http://www.thesheepmarket.com/
+
+* My game: Detective, a "Where in the World is Carmen Sandiego" clone
+
+
+h1. Iterative Uses for Mechanical Turk
+
+*Exploring Iterative and Parallel Human Computation Processes*
+  Greg Little1, Lydia B. Chilton2, Max Goldman1, Robert C. Miller1
+
+__We are interested in human computation processes which coordinate small contributions from many humans to achieve larger goals. For example, an algorithm might coordinate many workers to write a description for an image.__
+
+!file:///Users/jjones/Desktop/iterative.png!
+
+"Tools for Iterative Tasks on Mechanical Turk"
+
+h1. Turkee Gem
+
+[http://github.com/aantix/turkee]http://github.com/aantix/turkee
+
+The Turkee gem builds on top of RTurk providing a simple form helper for posting/representing model data on Mechanical Turk's external servers.
+
+h3. The create_hit method takes a model, creates a Mechanical Turk hit pointing it at the new resource URL for the model passed in.
+e.g. new_iteration_url 
+
+bc.. 
+task = Turkee::TurkeeTask.create_hit(host, turkee_task[:hit_title], turkee_task[:hit_description], 'Iteration',
+                                     turkee_task[:hit_num_assignments], turkee_task[:hit_reward], turkee_task[:hit_lifetime])
+
+h3. The form helper directs the form action towards the external Turk url and expands the fields in the given block in the same manner that Rails's form_for helper does.
+
+pre.
+<&#37; turkee_form_for @survey do |f| &#37;>
+    What's your favorite color?
+    <&#37;= f.text_area :value &#37;>
+<&#37; end &#37;>
+
+bc..
+<form method="post" action="https://workersandbox.mturk.com/mturk/externalSubmit">
+	  <input type="hidden" value="" name="assignmentId" id="assignmentId">
+      <input type="hidden" value="2" name="iteration[turkee_task_id]" id="iteration_turkee_task_id">
+      <p><textarea rows="20" name="iteration[value]" id="iteration_value" disabled="disabled" cols="40"></textarea></p>
+      <p><input type="submit" value="Create" name="commit" id="iteration_submit" disabled="disabled"></p>
+</form>
+
+h3.  Lastly, the process_hits method retrieves the user posted data from Mechanical Turk, reconstructs the data into a param hash (like a Controller), determines the model for which the data represents, and creates an entry for that model in the database.
+
+@Turkee::TurkeeTask.process_hits(@turkee_task)@
+
+
+h1. Turkee Iterator
+
+[http://github.com/aantix/Turkee-Iterator]http://github.com/aantix/Turkee-Iterator
+
+h1. Example 1, Say Hello
+
+[https://detective.textmatch.me]https://detective.textmatch.me
+
+* Please say "Hello" to my colleagues and tell us where you're from.
+
+* I am demo'ing Mechanical Turk to my colleagues.  Please tell send us a creative "hello" and where you're from. 
+
+* A one or two line introduction would be nice.  Tell us how the weather is in your city.  Tell us about your family.  Or just simply say hello. 
+
+* 0.05
+
+* 100
+
+* 5
+
+* It's mostly sunny at 65 degrees. Hello from San Mateo, CA!
+
+-- Usually start receiving responses in one to two minutes.
+-- [https://www.mturk.com/mturk/preview?groupId=1B8BXI5RRF0KJ2C28ZEG5FS3N1Q7LJ]https://www.mturk.com/mturk/preview?groupId=1B8BXI5RRF0KJ2C28ZEG5FS3N1Q7LJ
+
+h1. Example 2, The Best One Liner: Voting and Revisions to Prev Examples
+
+[https://detective.textmatch.me/iterations?id=2]https://detective.textmatch.me/iterations?id=2
+
+* Is this line funny?
+
+* I love jokes and I especially love "one liners" that you often hear in movies such as _Airplane!_ or _The Naked Gun_.  Here's a favorite of mine :
+
+"Like a blind man in an orgy, I was going to have to feel my way around."
+
+Read the one-liner(s) below, and if you think it is funny, click the "vote" button.  If you do not think it is funny, submit your own one-liner for a chance to win $1.00 bonus if your one liner is selected.
+
+*  Either click "vote" next to the line that you think is funniest, or submit your own to win a $1.00 bonus. You can use other people's jokes, change them slightly, and create new one liner (just click the "copy" link).
+
+* 0.05
+
+* 100
+
+* 5
+
+* Like a midget at a urinal, I was going to have to stay on my toes.
+
+--[https://www.mturk.com/mturk/preview?groupId=1EQ207IQ555TE9US8UESCOG0139CUA]https://www.mturk.com/mturk/preview?groupId=1EQ207IQ555TE9US8UESCOG0139CUA
+
+h1. Example 3, Finish the story: Mutiple Iterative and Branching Example
+
+[https://detective.textmatch.me/iterations?id=YYY]https://detective.textmatch.me/iterations?id=YYY
+
+* Help me complete my story.
+
+* I am creating a story.  Add two or three sentences to the story that I have so far or vote on the best submission (click on the 'Vote!' button).  
+
+*  Either click the "vote" button next to the best storyline submission, or submit help to continue the story by submitting your own two or three sentences. You can use other people's submissions, change them slightly and submit your own storyline (just click the "copy" link).
+
+"A man walks into a bar wearing a ski mask, holds a gun in the air and screams, "Empty your pockets or I empty my gun! Your choice!"
+
+The patrons scramble to the floor and faint whimpers can be heard all around pressing their faces tightly to the floor hoping not to be heard."
+
+* 0.05
+
+* 100
+
+* 5
+
+* No seed data..
+
+--[https://www.mturk.com/mturk/preview?groupId=XXXXX]https://www.mturk.com/mturk/preview?groupId=XXXXX
+
+
+h1. Content creation / ambiguity resolution at Zvents
+
+* Multiple Turkers contribute to resolve missing data/ambiguous data records.
+* Allow multiple users to revise copy/text for events in order to possibly improve quality of data.
+
+h1. Other Concepts
+
+h1. Micro Bonuses
+
+The concept where the user is awarded a varying amount depending upon how much time they take to answer a question or how accurate it (relative to the other user answers)
+
+E.g. Maybe there's a trivia game where you record how long it takes each user to answer a question and the fastest response for the day gets 10 cents instead of 5.
+
+h1. Gambling 
+
+Allow users to gamble their potential pay.  
+
+E.g. Sentiment analysis.
+
+Show the user all of the recent headlines for a given stock, stock charts, etc.
+
+You state that they can either take their payout now, OR, if they think that the stock will close out higher than it is now at the end of the day,
+they can "gamble", and will be awarded the fee PLUS a bonus at the end of the day.  If it closes down from the point at where it is, they receive nothing.
+
+Does a future, larger payout increase the quality of data analysis?
+
+h1. Research Papers
+
+**Financial Incentives and the Performance of Crowds**
+Winter Mason, Yahoo! Research
+
+__Figure 2 reveals two main findings: first, that across all difficulty levels participants chose to complete more tasks on average when the pay was higher (F(3,607) = 15.73, p < 0.001); and second, that across all payment levels, the number of completed tasks decreased with increasing difficulty.__
+
+__As Figure 3 indicates, however, increasing compensation did not improve accuracy, which we measured in two ways...__
+
+
+**Toward Automatic Task Design: A Progress Report**
+Eric Huang, School of Engineering and Applied Sciences Harvard University
+
+!file:///Users/jjones/Desktop/time_to_completion.png!
+
+h1. etc
+
+TOS
+[https://requester.mturk.com/mturk/help?helpPage=policies#restrictions_use_mturk]https://requester.mturk.com/mturk/help?helpPage=policies#restrictions_use_mturk
+
+Relevant articles :
+[http://www.readwriteweb.com/enterprise/2010/03/crowdsourcing-in-the-enterpris.php]http://www.readwriteweb.com/enterprise/2010/03/crowdsourcing-in-the-enterpris.php
+[http://waxy.org/2008/11/the_faces_of_mechanical_turk/]http://waxy.org/2008/11/the_faces_of_mechanical_turk/
+
+[http://slideshow.rubyforge.org/]Made with Slideshow
