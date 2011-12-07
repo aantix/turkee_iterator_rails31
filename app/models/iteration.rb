@@ -16,7 +16,7 @@ class Iteration < ActiveRecord::Base
   
   def amazon_image_urls
     @amazon_images||=URI.extract(value).collect do |u| 
-      ai = Amazon::Hacks::Image.build_from_url(u)
+      ai = Amazon::Hacks::Image.build_from_url(u) rescue nil
       ai.nil? ? nil : ai.to_s
     end.compact
   end
