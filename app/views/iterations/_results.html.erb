@@ -1,11 +1,5 @@
 <h3>User Submissions</h3>
 
-
-
-<%# @iterations.each do |iteration| %>
-    <%# tree_ul(@iterations) {|item| item.name} %>
-<%# end %>
-
 <table width="100%">
   <tr>
     <th>Submission</th>
@@ -14,8 +8,12 @@
 
   <% @iterations.each do |iteration| %>
       <tr>
-        <td><%= h iteration.value %></td>
-        <td><%= h iteration.iteration_votes.count if @turkee_task.allow_voting? %></td>
+        <td><%=
+            auto_link(iteration.value, :html => { :target => '_blank' }) do |text|
+                simple_format text
+            end
+            %></td>
+        <td><%= iteration.iteration_votes.count if @turkee_task.allow_voting? %></td>
       </tr>
   <% end %>
 </table>

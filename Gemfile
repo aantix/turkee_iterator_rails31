@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.1'
+gem 'rails_autolink'
 gem 'mysql2'
 gem 'turkee', :git => 'https://github.com/aantix/turkee.git', :branch => 'turkee_rails31'
 gem 'acts_as_tree'

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/aantix/turkee.git
-  revision: ecb20b3975b14903046dea24f6dac37941daa56b
+  revision: ac532e6b2ab0abc51bf689c8d268e04cf2492e5d
   branch: turkee_rails31
   specs:
     turkee (1.1.1)
@@ -114,6 +114,8 @@ GEM
       activesupport (= 3.1.1)
       bundler (~> 1.0)
       railties (= 3.1.1)
+    rails_autolink (1.0.4)
+      rails (>= 3.1.0)
     railties (3.1.1)
       actionpack (= 3.1.1)
       activesupport (= 3.1.1)
@@ -167,6 +169,7 @@ DEPENDENCIES
   omniauth-github
   pg
   rails (= 3.1.1)
+  rails_autolink
   sass-rails (~> 3.1.4)
   sqlite3
   turkee!
