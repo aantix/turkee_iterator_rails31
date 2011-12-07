@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/aantix/amazon_hacks.git
+  revision: b6f98a2710d3c160a2f0e2d3778b922e31a6310d
+  specs:
+    amazon-hacks (0.5.1)
+      color-tools (= 1.3.0)
+      hoe (= 1.1.6)
+
+GIT
   remote: https://github.com/aantix/turkee.git
   revision: ac532e6b2ab0abc51bf689c8d268e04cf2492e5d
   branch: turkee_rails31
@@ -8,13 +16,6 @@ GIT
       rails (>= 3.0.7)
       rturk (>= 2.3.0)
       turkee
-
-PATH
-  remote: /Users/jjones/Projects/amazon-hacks-0.5.1
-  specs:
-    amazon-hacks (0.5.1)
-      color-tools (= 1.3.0)
-      hoe (= 1.1.6)
 
 GEM
   remote: http://rubygems.org/
