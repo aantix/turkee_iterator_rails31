@@ -1,3 +1,5 @@
+require 'uri'
+
 class Iteration < ActiveRecord::Base
   acts_as_tree :foreign_key => "parent_id"
 
@@ -10,6 +12,13 @@ class Iteration < ActiveRecord::Base
 
   def iteration_votes_count
     iteration_votes.count
+  end
+  
+  def amazon_image_urls
+    @amazon_images||=URI.extract(value).collect do |u| 
+      ai = Amazon::Hacks::Image.build_from_url(u)
+      ai.nil? ? nil : ai.to_s
+    end.compact
   end
 
   def self.create_hit(host, turkee_task, seed_data = nil)
