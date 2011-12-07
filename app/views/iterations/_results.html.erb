@@ -8,12 +8,18 @@
 
   <% @iterations.each do |iteration| %>
       <tr>
-        <td><%=
-            auto_link(iteration.value, :html => { :target => '_blank' }) do |text|
+        <td>
+            <%=  image_tag(iteration.amazon_image_urls.first.to_s, :align => 'left', :hspace => 20, :vspace => 20) unless iteration.amazon_image_urls.blank? %>
+
+            <%=
+              auto_link(iteration.value, :html => { :target => '_blank' }) do |text|
                 simple_format text
-            end
-            %></td>
-        <td><%= iteration.iteration_votes.count if @turkee_task.allow_voting? %></td>
+              end
+            %>
+        </td>
+        <td>
+          <%= iteration.iteration_votes.count if @turkee_task.allow_voting? %>
+        </td>
       </tr>
   <% end %>
 </table>

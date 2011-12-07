@@ -4,6 +4,8 @@ gem 'rails', '3.1.1'
 gem 'rails_autolink'
 gem 'mysql2'
 gem 'turkee', :git => 'https://github.com/aantix/turkee.git', :branch => 'turkee_rails31'
+#gem 'amazon-hacks', '0.5.1', :path => '/Users/jjones/Projects/amazon-hacks-0.5.1'
+gem "amazon-hacks", '0.5.1', :git => "https://github.com/aantix/amazon_hacks.git"
 gem 'acts_as_tree'
 gem 'omniauth'
 gem 'omniauth-github'
