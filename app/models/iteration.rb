@@ -17,10 +17,12 @@ class Iteration < ActiveRecord::Base
                                          turkee_task[:hit_num_assignments], turkee_task[:hit_reward], turkee_task[:hit_lifetime])
 
     # Fields that were added for the turkee_iterator demo so we update these seperatly
-    task.form_body    = turkee_task[:form_body]
-    task.allow_voting = turkee_task[:allow_voting]
-    task.returk       = turkee_task[:returk]
-    task.returk_top_x = turkee_task[:returk_top_x]
+    task.form_body           = turkee_task[:form_body]
+    task.allow_voting        = turkee_task[:allow_voting]
+    task.returk              = turkee_task[:returk]
+    task.returk_top_x        = turkee_task[:returk_top_x]
+    task.display_submissions = turkee_task[:display_submissions]
+
     task.save
 
     Iteration.create(:value => seed_data, :turkee_task_id => task.id) unless seed_data.blank?

@@ -36,33 +36,15 @@
 
       <fieldset>
         <%= f.label :display_submissions, 'Display submissions?' %>
-        <%= f.check_box :display_submissions, :onclick => "$('allow_voting').toggle('slide');" %>
+        <%= f.check_box :display_submissions, :onclick => "$('#allow_voting').toggle('slide');" %>
       </fieldset>
 
       <fieldset id="allow_voting" style="display:none">
         <%= f.label :allow_voting, 'Allow voting?' %>
-        <%= f.check_box :allow_voting, :onclick => "$('returk_top_x').toggle('slide');" %>
+        <%= f.check_box :allow_voting %>
         <hr>
         <label>Seed Data (optional)</label><br/>
         <%= text_area :seed, :data %>
-      </fieldset>
-
-      <fieldset>
-        <%= f.label :returk, 'Returk result(s)?' %>
-        <%= f.check_box :returk, :onclick => "$('returk_section').toggle('slide');" %>
-
-        <div id="returk_section" style="display:none">
-
-          <div id="returk_top_x" style="display:none">
-            Returk top <%= f.text_field :returk_top_x, :size => 2 %> item(s).
-            <br/>
-          </div>
-
-          <%= f.label :returk_form_body, 'Instructions for all subsequent HITs (displayed on form).<br/>Local variable of \'iteration\' represents value from previous HIT.' %>
-          <br/>
-          <%= f.text_area :returk_form_body %>
-        </div>
-
       </fieldset>
 
       <%= f.submit 'Create' %>
