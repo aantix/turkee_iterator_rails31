@@ -1,22 +1,31 @@
+h1. Who We Are
+
+h3. Jim Jones ( jim.jones1@gmail.com )
+
+Creator of the Turkee gem, a Rails form library that allows a developer to easily integrate with Mechanical Turk using the standard Rails form helpers. The gem also makes it easy to retrieve the data submitted to Mechanical Turk and map those values back to your existing models.
+
+h3. Mark Percival ( m@mdp.im )
+
+Creator of the RTurk gem, a simple wrapper and library for Amazon's Mechanical Turk API.
+
 h1. What is Mechanical Turk
 
-The Amazon Mechanical Turk (MTurk) is one of the suites of Amazon Web Services, a crowd-sourcing Internet marketplace that enables computer programmers (known as Requesters) who are located in the United States to co-ordinate the use of human intelligence to perform tasks which computers are unable to do.  The people that perform these tasks are informally referred to as "Turkers".
+The Amazon Mechanical Turk (MTurk) is one of the suites of Amazon Web Services, a crowd-sourcing Internet marketplace that enables computer programmers (known as Requesters) to co-ordinate the use of human intelligence to perform tasks which computers are unable to do.  The people that perform these tasks are informally referred to as "Turkers".
 
 h1. Mechanical Turk Demographics
-*[http://waxy.org/2008/11/the_faces_of_mechanical_turk/]http://waxy.org/2008/11/the_faces_of_mechanical_turk/
+* "http://waxy.org/2008/11/the_faces_of_mechanical_turk/":http://waxy.org/2008/11/the_faces_of_mechanical_turk/
 
 !http://waxy.org/random/images/faces_of_mechanical_turk.jpg!
 
 h1. More Demographics
 
-*[http://behind-the-enemy-lines.blogspot.com/2010/03/new-demographics-of-mechanical-turk.html]http://behind-the-enemy-lines.blogspot.com/2010/03/new-demographics-of-mechanical-turk.html
-
+* "http://behind-the-enemy-lines.blogspot.com/2010/03/new-demographics-of-mechanical-turk.html":http://behind-the-enemy-lines.blogspot.com/2010/03/new-demographics-of-mechanical-turk.html
 
 * United States: 46.80%
 * India: 34.00%
 * Miscellaneous: 19.20%
 
-!http://4.bp.blogspot.com/_skxW9kDLt_c/S5bhZ-i8EBI/AAAAAAAAEb0/RzSvlYP5KYY/s1600-h/gender.PNG!
+!file:///Users/jjones/Projects/turkee_iterator_rails31_mdp/doc/presentation/gender.png!
 
 !http://4.bp.blogspot.com/_skxW9kDLt_c/S5bhzBTD34I/AAAAAAAAEb8/UdDG6wxOqx0/s400/yob-us.PNG!
 
@@ -31,10 +40,10 @@ h1. More Demographics
 h1. The Mechanical Turk Interface
 
 * Worker Interface
-[https://www.mturk.com/mturk/findhits?match=false]https://www.mturk.com/mturk/findhits?match=false
+"https://www.mturk.com/mturk/findhits?match=false":https://www.mturk.com/mturk/findhits?match=false
 
 * Requester Interface
-[https://requester.mturk.com/bulk/batches]https://requester.mturk.com/bulk/batches
+"https://requester.mturk.com/bulk/batches":https://requester.mturk.com/bulk/batches
 
 h1. Common Uses
 
@@ -42,43 +51,29 @@ h1. Common Uses
 * Collection of survey data
 * Sentiment analysis
 
-h1. Ruby Libraries
-
-* RTurk gem
-[http://github.com/mdp/rturk]http://github.com/mdp/rturk
-
-* Creating HITs
-bc..h = RTurk::Hit.create(:title => hit_title) do |hit|
-  hit.assignments = num_assignments
-  hit.description = hit_description
-  hit.reward      = reward
-  hit.lifetime    = duration.days.seconds.to_i
-  hit.question(f_url, :frame_height => HIT_FRAMEHEIGHT)
-  # hit.qualifications.add :approval_rate, { :gt => 80 }
-end
-
-* Reviewing HITs
-bc..hits = RTurk::Hit.all_reviewable
-
-puts "#{hits.size} reviewable hits. \n"
-
-unless hits.empty?
-  puts "Reviewing all assignments"
-
-  hits.each do |hit|
-    hit.assignments.each do |assignment|
-      puts assignment.answers['tags']
-      assignment.approve! if assignment.status == 'Submitted'
-    end
-  end
-end
-
 h1. Creative Uses of Mechanical Turk
 
 * 10,000 Sheep
-[http://www.thesheepmarket.com/]:http://www.thesheepmarket.com/
+All drawn by Turkers
+"http://www.thesheepmarket.com/":http://www.thesheepmarket.com/
 
-* My game: Detective, a "Where in the World is Carmen Sandiego" clone
+
+
+
+* Dr. Suessify the News
+"http://groups.csail.mit.edu/uid/deneme/?p=671":http://groups.csail.mit.edu/uid/deneme/?p=671
+
+  * Russia to launch 520-day mock mission to Mars → Oh, The Places Russia Will Go!
+  * Fisherman’s wife breaks the silence → One Fish Two Fish Sick Fish Who Fish
+  * BP tries again to cap well; protests set to start → BP tries to cap with a hat while protesters start to raise hell about the well
+
+
+
+
+* "Take a Bow"
+"http://nowtakeabow.com/":http://nowtakeabow.com/
+
+This isn't created with Mechanical Turk, but you can envision the possibilities of utilizing Mechanical Turk workers for the creation of a piecemeal video such as this.
 
 
 h1. Iterative Uses for Mechanical Turk
@@ -92,51 +87,120 @@ __We are interested in human computation processes which coordinate small contri
 
 "Tools for Iterative Tasks on Mechanical Turk"
 
-h1. Turkee Gem
+h1. Ruby Integration
 
-[http://github.com/aantix/turkee]http://github.com/aantix/turkee
+* RTurk gem
+"http://github.com/mdp/rturk":http://github.com/mdp/rturk
+
+* Creating HITs
+{{{
+h = RTurk::Hit.create(:title => hit_title) do |hit|
+  hit.assignments = num_assignments
+  hit.description = hit_description
+  hit.reward      = reward
+  hit.lifetime    = duration.days.seconds.to_i
+  hit.question(f_url, :frame_height => HIT_FRAMEHEIGHT)
+  # hit.qualifications.add :approval_rate, { :gt => 80 }
+end
+}}}
+
+* Reviewing HITs
+{{{
+hits = RTurk::Hit.all_reviewable
+puts "#{hits.size} reviewable hits. \n"
+unless hits.empty?
+  puts "Reviewing all assignments"
+  hits.each do |hit|
+    hit.assignments.each do |assignment|
+      puts assignment.answers['tags']
+      assignment.approve! if assignment.status == 'Submitted'
+    end
+  end
+end
+}}}
+
+h1. Rails Integration Turkee Gem
+
+* Turkee gem
+"http://github.com/aantix/turkee":http://github.com/aantix/turkee
 
 The Turkee gem builds on top of RTurk providing a simple form helper for posting/representing model data on Mechanical Turk's external servers.
 
 h3. The create_hit method takes a model, creates a Mechanical Turk hit pointing it at the new resource URL for the model passed in.
 e.g. new_iteration_url 
 
-bc.. 
+{{{
 task = Turkee::TurkeeTask.create_hit(host, turkee_task[:hit_title], turkee_task[:hit_description], 'Iteration',
                                      turkee_task[:hit_num_assignments], turkee_task[:hit_reward], turkee_task[:hit_lifetime])
+}}}
 
 h3. The form helper directs the form action towards the external Turk url and expands the fields in the given block in the same manner that Rails's form_for helper does.
 
-pre.
-<&#37; turkee_form_for @survey do |f| &#37;>
-    What's your favorite color?
-    <&#37;= f.text_area :value &#37;>
-<&#37; end &#37;>
+!file:///Users/jjones/Projects/turkee_iterator_rails31_mdp/doc/presentation/turkee_form_code.png!
 
-bc..
-<form method="post" action="https://workersandbox.mturk.com/mturk/externalSubmit">
-	  <input type="hidden" value="" name="assignmentId" id="assignmentId">
-      <input type="hidden" value="2" name="iteration[turkee_task_id]" id="iteration_turkee_task_id">
-      <p><textarea rows="20" name="iteration[value]" id="iteration_value" disabled="disabled" cols="40"></textarea></p>
-      <p><input type="submit" value="Create" name="commit" id="iteration_submit" disabled="disabled"></p>
-</form>
+{{{
+<form accept-charset="UTF-8" action="https://workersandbox.mturk.com/mturk/externalSubmit" class="new_survey" id="new_survey" method="post">
+    <input type="hidden" id="assignmentId" name="assignmentId" value="2G2UC26DG67D103D8QB0FOK2JTAD66"/>
+    <input type="hidden" id="hitId" name="hitId" value="29E6NG1FS3NYNMBGNC6ZVZL21YQLZU"/>
+    <input type="hidden" id="workerId" name="workerId" value="A3DWBLF5GT7ACT"/>
+    <input type="hidden" id="turkSubmitTo" name="turkSubmitTo" value="https%3A%2F%2Fworkersandbox.mturk.com"/>
+    <input id="iteration_turkee_task_id" name="survey[turkee_task_id]" type="hidden" value="9" />
+    <p><textarea cols="40" id="survey_value" name="survey[value]" rows="20"></textarea></p>
+    <p><input name="commit" type="submit" value="Create" /></p>
+</form>	
+}}}
 
-h3.  Lastly, the process_hits method retrieves the user posted data from Mechanical Turk, reconstructs the data into a param hash (like a Controller), determines the model for which the data represents, and creates an entry for that model in the database.
+h1. Retrieving Data from Mechanical Turk
 
-@Turkee::TurkeeTask.process_hits(@turkee_task)@
+The **process_hits** method retrieves the user posted data from Mechanical Turk, reconstructs the data into a param hash (like a Controller), determines the model for which the data represents, and creates an entry for that model in the database.
+
+{{{
+Turkee::TurkeeTask.process_hits(@turkee_task)
+}}}
+
+{{{
+rake turkee:get_all_results
+}}}
 
 
-h1. Turkee Iterator
+h1. Turkee Iterator (updated for Rails 3.1)
 
-[http://github.com/aantix/Turkee-Iterator]http://github.com/aantix/Turkee-Iterator
+Turkee Iterator is a demo built on top of Turkee to sample some of the capabilities of Mechanical Turk.  Allows for flexible HIT requests from Mechanical Turk.
 
-h1. Example 1, Say Hello
+"https://github.com/aantix/turkee_iterator_rails31":https://github.com/aantix/turkee_iterator_rails31
 
-[https://detective.textmatch.me]https://detective.textmatch.me
+h1. Christmas Demos
+
+h1. Gift For Wife
+
+**Directions** : Should be under $25 
+Should include a link to the item on Amazon 
+Should look like I really care.
+
+Either vote for your favorite submission OR give me your own gift idea (and Amazon link) for a chance to win a bonus 50 cents.
+
+Thanks for the help!
+
+"http://turkee31.herokuapp.com/iterations?id=9":http://turkee31.herokuapp.com/iterations?id=9
+
+
+h1. Difficult Dilemma
+
+**Directions**:  I'm having difficulty telling my kids that Santa doesn't really exist. On top of that, they'e been terrible this past year.
+
+Please write a short letter to my kids from Santa explaining why he can no longer give them gifts anymore(any reason will do). I will transcribe the best one it and leave it in their stockings on Christmas morning.
+
+Merry Christmas!
+
+"http://turkee31.herokuapp.com/iterations?id=11":http://turkee31.herokuapp.com/iterations?id=11
+
+h1. Let's Do a Realtime Example, Say Hello
+
+"http://turkee31.herokuapp.com/turkee/turkee_tasks/new":http://turkee31.herokuapp.com/turkee/turkee_tasks/new
 
 * Please say "Hello" to my colleagues and tell us where you're from.
 
-* I am demo'ing Mechanical Turk to my colleagues.  Please tell send us a creative "hello" and where you're from. 
+* I am demo'ing Mechanical Turk to the Ruby SF meetup group.  Please tell send us a creative "hello" and where you're from. 
 
 * A one or two line introduction would be nice.  Tell us how the weather is in your city.  Tell us about your family.  Or just simply say hello. 
 
@@ -148,62 +212,41 @@ h1. Example 1, Say Hello
 
 * It's mostly sunny at 65 degrees. Hello from San Mateo, CA!
 
--- Usually start receiving responses in one to two minutes.
--- [https://www.mturk.com/mturk/preview?groupId=1B8BXI5RRF0KJ2C28ZEG5FS3N1Q7LJ]https://www.mturk.com/mturk/preview?groupId=1B8BXI5RRF0KJ2C28ZEG5FS3N1Q7LJ
+h1. Prev Demos
 
-h1. Example 2, The Best One Liner: Voting and Revisions to Prev Examples
+**Topic** Is this line funny?
 
-[https://detective.textmatch.me/iterations?id=2]https://detective.textmatch.me/iterations?id=2
+** Directions ** I love jokes and I especially love "one liners" that you often hear in movies such as _Airplane!_ or _The Naked Gun_.  Here's a favorite of mine :
 
-* Is this line funny?
-
-* I love jokes and I especially love "one liners" that you often hear in movies such as _Airplane!_ or _The Naked Gun_.  Here's a favorite of mine :
-
-"Like a blind man in an orgy, I was going to have to feel my way around."
+"Like a midget at a urinal, I was going to have to stay on my toes."
 
 Read the one-liner(s) below, and if you think it is funny, click the "vote" button.  If you do not think it is funny, submit your own one-liner for a chance to win $1.00 bonus if your one liner is selected.
 
-*  Either click "vote" next to the line that you think is funniest, or submit your own to win a $1.00 bonus. You can use other people's jokes, change them slightly, and create new one liner (just click the "copy" link).
-
-* 0.05
-
-* 100
-
-* 5
-
-* Like a midget at a urinal, I was going to have to stay on my toes.
-
---[https://www.mturk.com/mturk/preview?groupId=1EQ207IQ555TE9US8UESCOG0139CUA]https://www.mturk.com/mturk/preview?groupId=1EQ207IQ555TE9US8UESCOG0139CUA
-
-h1. Example 3, Finish the story: Mutiple Iterative and Branching Example
-
-[https://detective.textmatch.me/iterations?id=YYY]https://detective.textmatch.me/iterations?id=YYY
-
-* Help me complete my story.
-
-* I am creating a story.  Add two or three sentences to the story that I have so far or vote on the best submission (click on the 'Vote!' button).  
-
-*  Either click the "vote" button next to the best storyline submission, or submit help to continue the story by submitting your own two or three sentences. You can use other people's submissions, change them slightly and submit your own storyline (just click the "copy" link).
-
-"A man walks into a bar wearing a ski mask, holds a gun in the air and screams, "Empty your pockets or I empty my gun! Your choice!"
-
-The patrons scramble to the floor and faint whimpers can be heard all around pressing their faces tightly to the floor hoping not to be heard."
-
-* 0.05
-
-* 100
-
-* 5
-
-* No seed data..
-
---[https://www.mturk.com/mturk/preview?groupId=XXXXX]https://www.mturk.com/mturk/preview?groupId=XXXXX
+!http://i.imgur.com/ghveH.png!
 
 
-h1. Content creation / ambiguity resolution at Zvents
+h1. More Content Creation
 
-* Multiple Turkers contribute to resolve missing data/ambiguous data records.
-* Allow multiple users to revise copy/text for events in order to possibly improve quality of data.
+h1. Mechanical Turk is an untapped market in terms of getting content created for your application.  Start thinking outside the context of scientific surveys and fact finding and start thinking of this resource as a pool of human workers with emotions, opinions, and stories to tell.   
+
+E.g. 
+
+* Iterative story telling where each Turker adds a piece to a never ending story.
+
+* Have the Turker give their opinion on a topic or product and then have other Turkers respond to that opinion.
+
+* Have the Turker describe some emotionally happy or painful point in their life.  Ask emotionally charged question to have the Turker reveal the essence of who they are.
+
+h1. Example: Obesity Testimonials (Design of Questions)
+
+h3. Upload a picture of yourself of when you first considered yourself "fat".
+
+!file:///Users/jjones/Projects/turker_obesity_testimonials/1CTODZITSLYU5LPCWR5PPSP7FG9JDO_obese_image1.jpg!
+
+**When the above picture was taken, were you aware that you had been gaining weight?  Describe the feeling you had when you first glanced at the picture and noticed your weight gain. Did anyone else notice or make snide comments?  How did you feel?**
+
+__"As a child I was pretty average but I was lead to believe that I was fat.  I would request simple items, things that are status symbols to the average kid, like jeans.  These small requests would be shot down, my mother telling me that I was too big to fit into a pair of jeans.  I remember her telling me that when I was eight.  It started a cycle in my life where I felt that I was too large, too fat, for the things other children took for granted."__
+
 
 h1. Other Concepts
 
@@ -226,28 +269,26 @@ they can "gamble", and will be awarded the fee PLUS a bonus at the end of the da
 
 Does a future, larger payout increase the quality of data analysis?
 
-h1. Research Papers
+h1. Interesting Research Findings
 
-**Financial Incentives and the Performance of Crowds**
-Winter Mason, Yahoo! Research
+h1. Financial Incentives and the Performance of Crowds
+
+**Winter Mason, Yahoo! Research**
 
 __Figure 2 reveals two main findings: first, that across all difficulty levels participants chose to complete more tasks on average when the pay was higher (F(3,607) = 15.73, p < 0.001); and second, that across all payment levels, the number of completed tasks decreased with increasing difficulty.__
 
-__As Figure 3 indicates, however, increasing compensation did not improve accuracy, which we measured in two ways...__
+__As Figure 3 indicates, however, **increasing compensation did not improve accuracy**, which we measured in two ways...__
 
 
-**Toward Automatic Task Design: A Progress Report**
-Eric Huang, School of Engineering and Applied Sciences Harvard University
+h1. Toward Automatic Task Design: A Progress Report
+
+**Eric Huang, School of Engineering and Applied Sciences Harvard University**
 
 !file:///Users/jjones/Desktop/time_to_completion.png!
 
-h1. etc
+h1. Task Search in a Human Computation Market
+** Lydia B. Chilton, University of Washington ** 
 
-TOS
-[https://requester.mturk.com/mturk/help?helpPage=policies#restrictions_use_mturk]https://requester.mturk.com/mturk/help?helpPage=policies#restrictions_use_mturk
+__We found strong evidence that Turkers sort by the most number of HITs available (so they can find one task, and then do 100 instances of them in a row) and the most recently posted HITS (so they get the latest and greatest HITs).__
 
-Relevant articles :
-[http://www.readwriteweb.com/enterprise/2010/03/crowdsourcing-in-the-enterpris.php]http://www.readwriteweb.com/enterprise/2010/03/crowdsourcing-in-the-enterpris.php
-[http://waxy.org/2008/11/the_faces_of_mechanical_turk/]http://waxy.org/2008/11/the_faces_of_mechanical_turk/
 
-[http://slideshow.rubyforge.org/]Made with Slideshow

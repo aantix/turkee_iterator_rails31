@@ -14,13 +14,19 @@ class Iteration < ActiveRecord::Base
     iteration_votes.count
   end
   
-  def amazon_image_urls
-    @amazon_images||=URI.extract(value).collect do |u| 
+  def self.amazon_image_urls(text)
+    v = text.nil? ? value : text
+
+    @amazon_images||=URI.extract(v).collect do |u|
       ai = Amazon::Hacks::Image.build_from_url(u) rescue nil
       ai.nil? ? nil : ai.to_s
     end.compact
   end
 
+  def amazon_image_urls
+    Iteration.amazon_image_urls(value)
+  end
+  
   def self.create_hit(host, turkee_task, seed_data = nil)
     task = Turkee::TurkeeTask.create_hit(host, turkee_task[:hit_title], turkee_task[:hit_description], 'Iteration',
                                          turkee_task[:hit_num_assignments], turkee_task[:hit_reward], turkee_task[:hit_lifetime])
