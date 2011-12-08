@@ -83,7 +83,7 @@ h1. Iterative Uses for Mechanical Turk
 
 __We are interested in human computation processes which coordinate small contributions from many humans to achieve larger goals. For example, an algorithm might coordinate many workers to write a description for an image.__
 
-!file:///Users/jjones/Desktop/iterative.png!
+!file:///Users/jjones/Projects/turkee_iterator_rails31_mdp/doc/presentation/iterative.png!
 
 "Tools for Iterative Tasks on Mechanical Turk"
 
@@ -241,7 +241,7 @@ h1. Example: Obesity Testimonials (Design of Questions)
 
 h3. Upload a picture of yourself of when you first considered yourself "fat".
 
-!file:///Users/jjones/Projects/turker_obesity_testimonials/1CTODZITSLYU5LPCWR5PPSP7FG9JDO_obese_image1.jpg!
+!file:///Users/jjones/Projects/turkee_iterator_rails31_mdp/doc/presentation/1CTODZITSLYU5LPCWR5PPSP7FG9JDO_obese_image1.jpg!
 
 **When the above picture was taken, were you aware that you had been gaining weight?  Describe the feeling you had when you first glanced at the picture and noticed your weight gain. Did anyone else notice or make snide comments?  How did you feel?**
 
@@ -284,7 +284,7 @@ h1. Toward Automatic Task Design: A Progress Report
 
 **Eric Huang, School of Engineering and Applied Sciences Harvard University**
 
-!file:///Users/jjones/Desktop/time_to_completion.png!
+!file:///Users/jjones/Projects/turkee_iterator_rails31_mdp/doc/presentation/time_to_completion.png!
 
 h1. Task Search in a Human Computation Market
 ** Lydia B. Chilton, University of Washington ** 
