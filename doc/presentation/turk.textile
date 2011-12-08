@@ -85,8 +85,6 @@ __We are interested in human computation processes which coordinate small contri
 
 !file:///Users/jjones/Projects/turkee_iterator_rails31_mdp/doc/presentation/iterative.png!
 
-"Tools for Iterative Tasks on Mechanical Turk"
-
 h1. Ruby Integration
 
 * RTurk gem
@@ -211,19 +209,6 @@ h1. Let's Do a Realtime Example, Say Hello
 * 5
 
 * It's mostly sunny at 65 degrees. Hello from San Mateo, CA!
-
-h1. Prev Demos
-
-**Topic** Is this line funny?
-
-** Directions ** I love jokes and I especially love "one liners" that you often hear in movies such as _Airplane!_ or _The Naked Gun_.  Here's a favorite of mine :
-
-"Like a midget at a urinal, I was going to have to stay on my toes."
-
-Read the one-liner(s) below, and if you think it is funny, click the "vote" button.  If you do not think it is funny, submit your own one-liner for a chance to win $1.00 bonus if your one liner is selected.
-
-!http://i.imgur.com/ghveH.png!
-
 
 h1. More Content Creation
 
